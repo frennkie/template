@@ -8,7 +8,7 @@
 # Date:         1970-01-01
 
 # Versioning
-__version_info__ = ('0', '1', 'dev2')
+__version_info__ = ('0', '2', '0')
 __version__ = '.'.join(__version_info__)
 
 # Imports
@@ -22,7 +22,7 @@ def fake():
 
 def main():
     print config.PASSWORD
-    print misc.say_hello()
+    print misc.say_hello_world()
 
 if __name__ == "__main__":
     main()
