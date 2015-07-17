@@ -17,7 +17,6 @@ import argparse
 import config.config as config
 import modules.misc as misc
 
-
 # Same name as line 4 but without the extension (e.g. "backup_script")
 script_name = "something"
 
@@ -81,6 +80,9 @@ def main():
 
     print config.PASSWORD
     print misc.say_hello_world()
+
+    # Start Coding Here!
+
 
 if __name__ == "__main__":
     main()
