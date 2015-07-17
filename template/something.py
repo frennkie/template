@@ -7,18 +7,18 @@
 # Author:       mail@rhab.de
 # Date:         1970-01-01
 
-### Versioning
+# Versioning
 __version_info__ = ('0', '1', 'dev2')
 __version__ = '.'.join(__version_info__)
 
-### Imports
-import os.path, sys
-
+# Imports
 import config.config as config
 import modules.misc as misc
 
+
 def fake():
     return True
+
 
 def main():
     print config.PASSWORD
@@ -27,4 +27,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-#EOF
+# EOF

@@ -13,7 +13,8 @@
 # make sure (early) that parent dir (main app) is in path
 import os.path
 import sys
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
+current_path = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(current_path, os.pardir))
 
 # Imports
 import unittest2 as unittest

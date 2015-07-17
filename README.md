@@ -30,9 +30,9 @@ collected 2 items
 template/tests/test_misc.py .
 template/tests/test_something.py .
 
-#==#============================================================================
+================================================================================
 2 passed in 0.05 seconds
-=##=============================================================================
+================================================================================
 ```
 
 ## Customize
@@ -43,4 +43,10 @@ template/tests/test_something.py .
 ```
 
 
+
+## PEP8 (getting really funky now.. ;-) )
+```
+# E402 can not be passed in tests because we need to add parent dir to path
+pep8 --exclude=venv --ignore=E402 .
+```
 

@@ -13,7 +13,8 @@ __version__ = '.'.join(__version_info__)
 # make sure (early) to add parent dir (main app) to path
 import os.path
 import sys
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
+current_path = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(current_path, os.pardir))
 
 # Imports
 import unittest2 as unittest
@@ -24,6 +25,7 @@ class TestSomething(unittest.TestCase):
 
     def test_fake1(self):
         self.assertEqual(True, something.fake())
+
 
 def main():
     unittest.main()

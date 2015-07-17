@@ -6,22 +6,23 @@
 # Author:       mail@rhab.de
 # Date:         1970-01-01
 
-### Versioning
+# Versioning
 __version_info__ = ('0', '1', 'dev2')
 __version__ = '.'.join(__version_info__)
 
-### Imports
+# Imports
 
-### Functions
+# Functions
+
 
 def say_hello():
     return "Hello World"
 
-### not really needed:
+
 def main():
     print say_hello()
 
 if __name__ == "__main__":
     main()
 
-#EOF
+# EOF
