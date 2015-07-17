@@ -63,7 +63,19 @@ Example:
 - `0.6.2`    - stable release 0.6 after 2 Hotfixes
 
 This Style is supported by Git-Flow
+
 http://danielkummer.github.io/git-flow-cheatsheet/
+
+Reminders
+- avoid the hotfixes.. just stick with feature branches
+- if you need to create a hotfix starting from an old master/release state
+  create tags manually
+- the following is extremely useful for bumping version numbers in multiple
+  files
+```
+sed -i "s/__version_info__ = ('0', '2', '0')/__version_info__ = ('0', '2',
+'1')/gi" something.py modules/misc.py
+```
 
 ### Packaging
 ```
