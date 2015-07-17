@@ -1,7 +1,9 @@
 # Template
 
 
-### Get Started
+## Getting Started
+
+### Get and initialize template
 ```
 git clone https://github.com/frennkie/template
 cd template
@@ -10,6 +12,19 @@ source template/venv/bin/activate
 pip install pip --upgrade
 pip install -r requirements.txt
 ```
+
+### Customize
+
+Run script to change "template" to something that fits your project (not yet implemented!!)
+```
+./bin/start_project_from_template.sh insert_your_project_name_here
+```
+
+## Code
+
+Here Magic Happens (don't forget Testing, Versioning/Commiting and so on)
+
+## Important non-coding stuff (Testing, Versioning/Git-Flow, Packaging, PEP8)
 
 ### Run Tests
 ```
@@ -35,13 +50,20 @@ template/tests/test_something.py .
 ================================================================================
 ```
 
-### Customize
+### Versioning/Git-Flow
 
-Run script to change "template" to something that fits your project (not yet implemented!!)
-```
-./bin/start_project_from_template.sh insert_your_project_name_here
-```
+Versioning Style:
+- Mayor Version: e.g. 0 | 1 | 2
+- Minor Version: odd numbers for dev releases; even for stable releases
+- Last Part: String or Number - for Hotfixes and Dev stages (e.g. 0 | 1 | dev1)
 
+Example:
+- `0.3.dev2` - unstable release; 2nd dev iteration
+- `0.4.0`    - stable release 0.4
+- `0.6.2`    - stable release 0.6 after 2 Hotfixes
+
+This Style is supported by Git-Flow
+http://danielkummer.github.io/git-flow-cheatsheet/
 
 ### Packaging
 ```
