@@ -73,8 +73,7 @@ Reminders
 - the following is extremely useful for bumping version numbers in multiple
   files
 ```
-sed -i "s/__version_info__ = ('0', '2', '0')/__version_info__ = ('0', '2',
-'1')/gi" *.py modules/*.py tests/*.py
+sed -i "s/__version_info__ = ('0', '2', '0')/__version_info__ = ('0', '2', '1')/gi" *.py modules/*.py tests/*.py
 ```
 
 ### Packaging
