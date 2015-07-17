@@ -6,6 +6,3 @@ venv/
 
 # ignore logs
 logs/
-
-# ignore config.py
-config.py
