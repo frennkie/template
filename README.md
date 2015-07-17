@@ -43,6 +43,10 @@ template/tests/test_something.py .
 ```
 
 
+## Packaging
+```
+python setup.py sdist
+```
 
 ## PEP8 (getting really funky now.. ;-) )
 ```
