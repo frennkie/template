@@ -81,6 +81,23 @@ sed -i "s/__version_info__ = ('0', '2', '0')/__version_info__ = ('0', '2', '1')/
 python setup.py sdist
 ```
 
+### Test coverage
+
+`pip install pytest-cov`
+
+.coveragerc:
+```
+[run]
+omit = venv/*, tests/*
+```
+
+```
+cd template
+py.test --cov .
+```
+
+
+
 ### PEP8 (getting really funky now.. ;-) )
 ```
 # E402 can not be passed in tests because we need to add parent dir to path
