@@ -11,10 +11,10 @@ setup(
     url='https://github.com/frennkie/template',
     description='Template for my Python projects',
     long_description=open('README.md').read(),
-    packages=find_packages(exclude=["venv", "config"]),
-    #package_data = {
-    #    'template': ['config/config.py.sample']
-    #},
+    packages=find_packages(exclude=['template.config']),
+    package_data = {
+        'template': ['config/config.py.sample']
+    },
     scripts=['bin/start_project_from_template.sh'],
     license='MIT',
     install_requires=[],
