@@ -1,6 +1,6 @@
 #!template/venv/bin/python
 # -*- coding: utf-8 -*-
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='Template',
@@ -11,7 +11,10 @@ setup(
     url='https://github.com/frennkie/template',
     description='Template for my Python projects',
     long_description=open('README.md').read(),
-    packages=['template', 'template/modules', 'template/tests'],
+    packages=find_packages(exclude=["venv", "config"]),
+    #package_data = {
+    #    'template': ['config/config.py.sample']
+    #},
     scripts=['bin/start_project_from_template.sh'],
     license='MIT',
     install_requires=[],
