@@ -1,0 +1,11 @@
+# ignore pyc files
+*.pyc
+
+# ignore virtual environment
+venv/
+
+# ignore logs
+logs/
+
+# ignore config.py
+config.py
