@@ -22,7 +22,7 @@ def fake():
 
 def main():
     print config.PASSWORD
-    print misc.say_hello()
+    print misc.say_hello_world()
 
 if __name__ == "__main__":
     main()

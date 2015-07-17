@@ -24,7 +24,7 @@ import modules.misc as misc
 class TestMisc(unittest.TestCase):
 
     def test_say_hello_ok(self):
-        self.assertEqual("Hello World", misc.say_hello())
+        self.assertEqual("Hello World", misc.say_hello_world())
 
 
 def main():
