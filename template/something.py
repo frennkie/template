@@ -8,7 +8,7 @@
 # Date:         1970-01-01
 
 # Versioning
-__version_info__ = ('0', '2', '1')
+__version_info__ = ('0', '4', '0')
 __version__ = '.'.join(__version_info__)
 
 # Imports
