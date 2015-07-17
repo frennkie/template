@@ -1,7 +1,7 @@
 # Template
 
 
-## Get Started
+### Get Started
 ```
 git clone https://github.com/frennkie/template
 cd template
@@ -11,7 +11,7 @@ pip install pip --upgrade
 pip install -r requirements.txt
 ```
 
-## Run Tests
+### Run Tests
 ```
 py.test -v
 ```
@@ -35,20 +35,20 @@ template/tests/test_something.py .
 ================================================================================
 ```
 
-## Customize
+### Customize
 
-### Run script to change "template" to something that fits your project (not yet implemented!!)
+Run script to change "template" to something that fits your project (not yet implemented!!)
 ```
 ./bin/start_project_from_template.sh insert_your_project_name_here
 ```
 
 
-## Packaging
+### Packaging
 ```
 python setup.py sdist
 ```
 
-## PEP8 (getting really funky now.. ;-) )
+### PEP8 (getting really funky now.. ;-) )
 ```
 # E402 can not be passed in tests because we need to add parent dir to path
 pep8 --exclude=venv --ignore=E402 .
