@@ -153,6 +153,16 @@ def set_up_logger(logger_name="generic_logger",
     Returns:
         logger object
 
+    Examples:
+        >>> print(set_up_logger()).level
+        10
+        >>> print(set_up_logger()).isEnabledFor(10)
+        True
+        >>> print(set_up_logger()).isEnabledFor(9)
+        False
+
+    That would be it.. File/Stream Handler might be interesting.
+
     """
 
     # instantiate logger object
