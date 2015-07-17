@@ -7,8 +7,8 @@
 # Date:         1970-01-01
 
 # Versioning
-# __version_info__ = ('0', '1', 'dev2')
-# __version__ = '.'.join(__version_info__)
+__version_info__ = ('0', '4', '0')
+__version__ = '.'.join(__version_info__)
 
 # make sure (early) that parent dir (main app) is in path
 import os.path

@@ -15,6 +15,8 @@ pip install -r requirements.txt
 
 ### Customize
 
+Weired stuff.. don't name you python files the same as the directory.. there'll be import trouble (at least when testing!)
+
 Run script to change "template" to something that fits your project (not yet implemented!!)
 ```
 ./bin/start_project_from_template.sh insert_your_project_name_here
@@ -63,12 +65,40 @@ Example:
 - `0.6.2`    - stable release 0.6 after 2 Hotfixes
 
 This Style is supported by Git-Flow
+
 http://danielkummer.github.io/git-flow-cheatsheet/
+
+Reminders
+- avoid the hotfixes.. just stick with feature branches
+- if you need to create a hotfix starting from an old master/release state
+  create tags manually
+- the following is extremely useful for bumping version numbers in multiple
+  files
+```
+sed -i "s/__version_info__ = ('0', '2', '0')/__version_info__ = ('0', '2', '1')/gi" *.py modules/*.py tests/*.py
+```
 
 ### Packaging
 ```
 python setup.py sdist
 ```
+
+### Test coverage
+
+`pip install pytest-cov`
+
+.coveragerc:
+```
+[run]
+omit = venv/*, tests/*
+```
+
+```
+cd template
+py.test --cov .
+```
+
+
 
 ### PEP8 (getting really funky now.. ;-) )
 ```
