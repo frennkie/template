@@ -15,6 +15,8 @@ pip install -r requirements.txt
 
 ### Customize
 
+Weired stuff.. don't name you python files the same as the directory.. there'll be import trouble (at least when testing!)
+
 Run script to change "template" to something that fits your project (not yet implemented!!)
 ```
 ./bin/start_project_from_template.sh insert_your_project_name_here
