@@ -6,19 +6,24 @@
 # Author:       mail@rhab.de
 # Date:         1970-01-01
 
-### Versioning
+# Versioning
 __version_info__ = ('0', '1', 'dev2')
 __version__ = '.'.join(__version_info__)
 
-### Imports
+# make sure (early) to add parent dir (main app) to path
+import os.path
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
+
+# Imports
 import unittest2 as unittest
+import something
 
 
 class TestSomething(unittest.TestCase):
 
-    def test_function1_fake(self):
-        print "This is fake! (Something)"
-        self.assertEqual(True, True)
+    def test_fake1(self):
+        self.assertEqual(True, something.fake())
 
 def main():
     unittest.main()
@@ -26,4 +31,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-#EOF
+# EOF
