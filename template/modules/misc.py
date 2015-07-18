@@ -39,7 +39,8 @@ def say_hello_world():
     Returns:
         str: "Hello World"
 
-    Examples:
+    :Example:
+
         This is complete doctest for this function.
 
         >>> print(say_hello_world())
@@ -63,8 +64,8 @@ def say_hello(name):
     Returns:
         str: "Hello " + name
 
-    Examples:
-        Here are three Doctest examples for usage of this function.
+    :Example:
+        Here are three Doctest :Example for usage of this function.
 
         >>> print(say_hello("Bob"))
         Hello Bob
@@ -141,27 +142,18 @@ def set_up_logger(logger_name="generic_logger",
         The core logger passes the messages on to the Handlers so the core
         level must at least match the most verbose Handler level.
 
-    Args:
-        logger_name (str)       -- name of logger for logfile name
-            (default "generic_logger")
+        :arg str logger_name: name of logger for logfile name
+        :arg console_log: to enable or disable
+        :type console_log: True or False
+        :arg str console_log_level: console log level (default "INFO")
+        :arg file_log: to enable or disable file
+        :type file_log: True or False
+        :param str file_log_level: file log level (default "DEBUG")
+        :param str file_log_dir: dir to write log file to. No trailing slash.
+        :returns: logger
+        :rtype: logging.Logger
 
-        console_log (bool)      -- [True|False] to enable or disable
-            console logging (default True)
-
-        console_log_level (str) -- console log level (default "INFO")
-
-        file_log (bool)         -- [True|False] to enable or disable file
-            logging (default True)
-
-        file_log_level (str)    -- file log level (default "DEBUG")
-
-        file_log_dir (str)      -- dir to write log file to. No trailing slash.
-             (default "log")
-
-    Returns:
-        logger object
-
-    Examples:
+    :Example:
         >>> print(set_up_logger()).level
         10
         >>> print(set_up_logger()).isEnabledFor(10)
@@ -263,20 +255,12 @@ def rsync_local_to_remote(local_source=None,
         else:
             True|False, str -- if successful:   True, "ok"
                                if failed:       False, <Error Message>
-    Examples:
-        >>> print(rsync_local_to_remote(local_source="/some/foo",
-        ... id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host",
-        ... remote_destination="/some/bar/", delete=True, dry=True))
-        rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes \
--o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
--i "~/.ssh/id_rsa"' /some/foo user@host:/some/bar/
+    :Example:
+        >>> print(rsync_local_to_remote(local_source="/some/foo", id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host",remote_destination="/some/bar/", delete=True, dry=True))
+        rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' /some/foo user@host:/some/bar/
 
-        >>> print(rsync_local_to_remote(local_source="/some/foo",
-        ... id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host",
-        ... remote_destination="/some/bar/", dry=True))
-        rsync -arq --inplace -e 'ssh -o BatchMode=yes \
--o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
--i "~/.ssh/id_rsa"' /some/foo user@host:/some/bar/
+        >>> print(rsync_local_to_remote(local_source="/some/foo", id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host", remote_destination="/some/bar/", dry=True))
+        rsync -arq --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' /some/foo user@host:/some/bar/
 
     """
 
@@ -336,13 +320,11 @@ def rsync_remote_to_local(local_destination=None,
         True|False, str -- if successful:   True, "ok"
                            if failed:       False, <Error Message>
 
-    Examples:
+    :Example:
         >>> print(rsync_remote_to_local(local_destination="./",
         ... id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host",
         ... remote_source="/some/place/", delete=True, dry=True))
-        rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes \
--o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
--i "~/.ssh/id_rsa"' user@host:/some/place/ ./
+        rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' user@host:/some/place/ ./
 
         >>> print(rsync_remote_to_local(local_destination="./",
         ... id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host",
@@ -352,7 +334,7 @@ def rsync_remote_to_local(local_destination=None,
 -i "~/.ssh/id_rsa"' user@host:/some/place/ ./
 
     """
-    # TODO make sure local_destination is ok..?!
+    # todo make sure local_destination is ok..?!
 
     parameters = {'local_destination': local_destination,
                   'id_file': id_file,
