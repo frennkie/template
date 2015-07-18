@@ -19,6 +19,14 @@ import subprocess
 # Functions
 
 
+def call_process(command):
+    p = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = p.communicate()
+    exitcodes = p.returncode
+
+    return stdout, stderr, exitcodes
+
+
 def say_hello_world():
     """Return the string "Hello World".
 
@@ -279,30 +287,29 @@ def rsync_local_to_remote(local_source=None,
                   'remote_destination': remote_destination}
 
     if delete is False:
-        raw_string = '''rsync -arq --inplace -e 'ssh -o BatchMode=yes \
+        command_string = '''rsync -arq --inplace -e 'ssh -o BatchMode=yes \
 -o UserKnownHostsFile="/dev/null" \
 -o StrictHostKeyChecking=no -i "%(id_file)s"' %(local_source)s \
 %(remote_user)s@%(remote_host)s:%(remote_destination)s''' % parameters
     else:
-        raw_string = '''rsync -arq --delete --inplace \
+        command_string = '''rsync -arq --delete --inplace \
 -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" \
 -o StrictHostKeyChecking=no -i "%(id_file)s"' %(local_source)s \
 %(remote_user)s@%(remote_host)s:%(remote_destination)s''' % parameters
 
     if dry is True:
-        return raw_string
+        return command_string
     else:
-        sp = subprocess.Popen(raw_string, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.STDOUT)
-        output = sp.communicate()[0]
-        logger.debug(output)
-        if sp.returncode == 0:
-            logger.info("rsync successful")
-            return True, "ok"
+        stdout, stderr, exitcodes = call_process(command_string)
+
+        if exitcodes == 0:
+            print("rsync successful")
+            #logger.info("rsync successful")
+            return stdout, stderr, exitcodes
         else:
-            logger.error("rsync failed")
-            return False, output
+            print("rsync failed")
+            #logger.error("rsync failed")
+            return stdout, stderr, exitcodes
 
 
 def rsync_remote_to_local(local_destination=None,
@@ -354,36 +361,39 @@ def rsync_remote_to_local(local_destination=None,
                   'remote_source': remote_source}
 
     if delete is False:
-        raw_string = '''rsync -arq --inplace -e 'ssh -o BatchMode=yes -o \
+        command_string = '''rsync -arq --inplace -e 'ssh -o BatchMode=yes -o \
 UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
 -i "%(id_file)s"' %(remote_user)s@%(remote_host)s:%(remote_source)s \
 %(local_destination)s''' % parameters
     else:
-        raw_string = '''rsync -arq --delete --inplace -e 'ssh \
+        command_string = '''rsync -arq --delete --inplace -e 'ssh \
 -o BatchMode=yes -o UserKnownHostsFile="/dev/null" \
 -o StrictHostKeyChecking=no -i "%(id_file)s"' \
 %(remote_user)s@%(remote_host)s:%(remote_source)s \
 %(local_destination)s''' % parameters
 
     if dry is True:
-        return raw_string
+        return command_string
     else:
-        sp = subprocess.Popen(raw_string, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.STDOUT)
-        output = sp.communicate()[0]
-        logger.debug(output)
-        if sp.returncode == 0:
-            logger.info("rsync successful")
-            return True, "ok"
+        stdout, stderr, exitcodes = call_process(command_string)
+
+        if exitcodes == 0:
+            #logger.info("rsync successful")
+            print("rsync successful")
+            return stdout, stderr, exitcodes
         else:
-            logger.error("rsync failed")
-        return False, output
+            #logger.error("rsync failed")
+            print("rsync failed")
+            return stdout, stderr, exitcodes
 
 
-def main():
+
+
+
+def main()
     """Main - this docstring count as vaild test :-)
     >>> main()
+
     """
     pass
 
