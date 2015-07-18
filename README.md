@@ -6,25 +6,38 @@
 ### Get and initialize template
 ```
 git clone https://github.com/frennkie/template
-cd template
-virtualenv template/venv
-source template/venv/bin/activate
-pip install pip --upgrade
-pip install -r requirements.txt
+mv template NEW_PROJECT_NAME
+cd NEW_PROJECT_NAME
 ```
 
 ### Customize
 
-Weired stuff.. don't name you python files the same as the directory.. there'll be import trouble (at least when testing!)
+Weired stuff.. don't name your python files the same as the NEW_PROJECT_NAME.
+
+There will be import trouble (at least when testing!)
 
 Run script to change "template" to something that fits your project (not yet implemented!!)
+
 ```
-./bin/start_project_from_template.sh insert_your_project_name_here
+./bin/start_project_from_template.sh NEW_PROJECT_NAME
+```
+
+```
+virtualenv NEW_PROJECT_NAME/venv
+source NEW_PROJECT_NAME/venv/bin/activate
+pip install pip --upgrade
+pip install -r requirements.txt
+```
+
+Verify all is good
+
+```
+py.test
 ```
 
 ## Code
 
-Here Magic Happens (don't forget Testing, Versioning/Commiting and so on)
+Magic Happens Here (don't forget Testing, Versioning/Commiting and so on)
 
 ## Important non-coding stuff (Testing, Versioning/Git-Flow, Packaging, PEP8)
 
