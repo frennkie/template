@@ -390,7 +390,7 @@ UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
 
 
 
-def main()
+def main():
     """Main - this docstring count as vaild test :-)
     >>> main()
 
