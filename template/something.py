@@ -49,7 +49,7 @@ def main():
     # parse args
     args = parser.parse_args()
 
-    # -q (quite) has precedence over -v (verbose)
+    # -q (quiet) has precedence over -v (verbose)
     if args.quiet:
         args_verbosity = "ERROR"
     else:
