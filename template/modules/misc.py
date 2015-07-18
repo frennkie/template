@@ -244,10 +244,19 @@ def rsync_local_to_remote(local_source=None,
             True|False, str -- if successful:   True, "ok"
                                if failed:       False, <Error Message>
     Examples:
-        >>> print(rsync_local_to_remote(local_source="/some/foo", id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host", remote_destination="/some/bar/", delete=True, dry=True))
-        rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' /some/foo user@host:/some/bar/
-        >>> print(rsync_local_to_remote(local_source="/some/foo", id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host", remote_destination="/some/bar/", dry=True))
-        rsync -arq --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' /some/foo user@host:/some/bar/
+        >>> print(rsync_local_to_remote(local_source="/some/foo",
+        ... id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host",
+        ... remote_destination="/some/bar/", delete=True, dry=True))
+        rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes \
+-o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
+-i "~/.ssh/id_rsa"' /some/foo user@host:/some/bar/
+
+        >>> print(rsync_local_to_remote(local_source="/some/foo",
+        ... id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host",
+        ... remote_destination="/some/bar/", dry=True))
+        rsync -arq --inplace -e 'ssh -o BatchMode=yes \
+-o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
+-i "~/.ssh/id_rsa"' /some/foo user@host:/some/bar/
 
     """
 
@@ -258,14 +267,22 @@ def rsync_local_to_remote(local_source=None,
                   'remote_destination': remote_destination}
 
     if delete is False:
-        raw_string = r'''rsync -arq --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "%(id_file)s"' %(local_source)s %(remote_user)s@%(remote_host)s:%(remote_destination)s''' % parameters
+        raw_string = '''rsync -arq --inplace -e 'ssh -o BatchMode=yes \
+-o UserKnownHostsFile="/dev/null" \
+-o StrictHostKeyChecking=no -i "%(id_file)s"' %(local_source)s \
+%(remote_user)s@%(remote_host)s:%(remote_destination)s''' % parameters
     else:
-        raw_string = r'''rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "%(id_file)s"' %(local_source)s %(remote_user)s@%(remote_host)s:%(remote_destination)s''' % parameters
+        raw_string = '''rsync -arq --delete --inplace \
+-e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" \
+-o StrictHostKeyChecking=no -i "%(id_file)s"' %(local_source)s \
+%(remote_user)s@%(remote_host)s:%(remote_destination)s''' % parameters
 
     if dry is True:
         return raw_string
     else:
-        sp = subprocess.Popen(raw_string, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        sp = subprocess.Popen(raw_string, shell=True,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT)
         output = sp.communicate()[0]
         logger.debug(output)
         if sp.returncode == 0:
@@ -301,10 +318,19 @@ def rsync_remote_to_local(local_destination=None,
                            if failed:       False, <Error Message>
 
     Examples:
-        >>> print(rsync_remote_to_local(local_destination="./", id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host", remote_source="/some/place/", delete=True, dry=True))
-        rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' user@host:/some/place/ ./
-        >>> print(rsync_remote_to_local(local_destination="./", id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host", remote_source="/some/place/", dry=True))
-        rsync -arq --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' user@host:/some/place/ ./
+        >>> print(rsync_remote_to_local(local_destination="./",
+        ... id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host",
+        ... remote_source="/some/place/", delete=True, dry=True))
+        rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes \
+-o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
+-i "~/.ssh/id_rsa"' user@host:/some/place/ ./
+
+        >>> print(rsync_remote_to_local(local_destination="./",
+        ... id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host",
+        ... remote_source="/some/place/", dry=True))
+        rsync -arq --inplace -e 'ssh -o BatchMode=yes \
+-o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
+-i "~/.ssh/id_rsa"' user@host:/some/place/ ./
 
     """
     # TODO make sure local_destination is ok..?!
@@ -316,14 +342,23 @@ def rsync_remote_to_local(local_destination=None,
                   'remote_source': remote_source}
 
     if delete is False:
-        raw_string = r'''rsync -arq --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "%(id_file)s"' %(remote_user)s@%(remote_host)s:%(remote_source)s %(local_destination)s''' % parameters
+        raw_string = '''rsync -arq --inplace -e 'ssh -o BatchMode=yes -o \
+UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
+-i "%(id_file)s"' %(remote_user)s@%(remote_host)s:%(remote_source)s \
+%(local_destination)s''' % parameters
     else:
-        raw_string = r'''rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "%(id_file)s"' %(remote_user)s@%(remote_host)s:%(remote_source)s %(local_destination)s''' % parameters
+        raw_string = '''rsync -arq --delete --inplace -e 'ssh \
+-o BatchMode=yes -o UserKnownHostsFile="/dev/null" \
+-o StrictHostKeyChecking=no -i "%(id_file)s"' \
+%(remote_user)s@%(remote_host)s:%(remote_source)s \
+%(local_destination)s''' % parameters
 
     if dry is True:
         return raw_string
     else:
-        sp = subprocess.Popen(raw_string, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        sp = subprocess.Popen(raw_string, shell=True,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT)
         output = sp.communicate()[0]
         logger.debug(output)
         if sp.returncode == 0:
