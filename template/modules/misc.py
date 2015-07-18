@@ -94,6 +94,8 @@ def _get_numeric_logger_level_from_string(level):
     40
     >>> print(_get_numeric_logger_level_from_string("CRITICAL"))
     50
+    >>> print(_get_numeric_logger_level_from_string("FOO_BAR"))
+    10
 
     """
 
@@ -370,6 +372,9 @@ UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no \
 
 
 def main():
+    """Main - this docstring count as vaild test :-)
+    >>> main()
+    """
     pass
 
 if __name__ == "__main__":
