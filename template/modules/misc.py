@@ -218,7 +218,7 @@ def set_up_logger(logger_name="generic_logger",
 
 
 def rsync_local_to_remote(local_source=None,
-                          id_file="./id_rsa",
+                          id_file="~/.ssh/id_rsa",
                           remote_user="user",
                           remote_host="localhost",
                           remote_destination=None,
@@ -294,7 +294,7 @@ def rsync_local_to_remote(local_source=None,
 
 
 def rsync_remote_to_local(local_destination=None,
-                          id_file="./id_rsa",
+                          id_file="~/.ssh/id_rsa",
                           remote_user="user",
                           remote_host="localhost",
                           remote_source=None,
