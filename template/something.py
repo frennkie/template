@@ -22,6 +22,20 @@ script_name = "something"
 
 
 def fake():
+    """Fake function so that we can run a fake test.
+
+    Returns
+    -------
+    bool
+        True always
+
+    Examples
+    -------
+    >>> fake()
+    True
+
+    """
+
     return True
 
 
