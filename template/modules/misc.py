@@ -7,15 +7,41 @@
 # Date:         1970-01-01
 
 # Versioning
-__version_info__ = ('0', '4', '0')
+__version_info__ = ('0', '6', '0')
 __version__ = '.'.join(__version_info__)
 
 # Imports
 import logging
 import os.path
 import sys
+import subprocess
 
 # Functions
+
+
+def call_process(command):
+    """Use subprocess Popen to execute system command. Return the result.
+
+    Parameters
+    ----------
+    command : str
+        complete string (raw?!) that should be executed
+
+    Returns
+    -------
+    str, str, int
+        stdout, stderr, exitcodes
+
+    Example
+    -------
+
+    """
+
+    p = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = p.communicate()
+    exitcodes = p.returncode
+
+    return stdout, stderr, exitcodes
 
 
 def say_hello_world():
@@ -24,17 +50,20 @@ def say_hello_world():
     This function returns the static string "Hello World".
     It is only a demo.
 
-    Args:
-        None
+    Parameters
+    ----------
 
-    Returns:
-        str: "Hello World"
+    Returns
+    -------
+    str
+        "Hello World"
 
-    Examples:
-        This is complete doctest for this function.
+    Example
+    -------
+    This is complete doctest for this function.
 
-        >>> print(say_hello_world())
-        Hello World
+    >>> print(say_hello_world())
+    Hello World
 
     """
     return "Hello World"
@@ -46,40 +75,51 @@ def say_hello(name):
     This function returns the static string "Hello World".
     It is only a demo.
 
-    Args:
-        name (str): Name
-            Pass a name "Bob" in order to get "Hello Bob".
-            Again, just a demo.
+    Parameters
+    ----------
+    name : str
+        Pass a name "Bob" in order to get "Hello Bob". Again, just a demo.
 
-    Returns:
-        str: "Hello " + name
+    Returns
+    -------
+    str
+        "Hello " + name
 
-    Examples:
-        Here are three Doctest examples for usage of this function.
+    Example
+    -------
+    Here are three Doctest :Example for usage of this function.
 
-        >>> print(say_hello("Bob"))
-        Hello Bob
+    >>> print(say_hello("Bob"))
+    Hello Bob
 
-        >>> print(say_hello("Alice Cooper"))
-        Hello Alice Cooper
+    >>> print(say_hello("Alice Cooper"))
+    Hello Alice Cooper
 
-        >>> print(say_hello("New Line"))
-        Hello New Line
+    >>> print(say_hello("New Line"))
+    Hello New Line
 
     """
+
     return "Hello " + name
 
 
 def _get_numeric_logger_level_from_string(level):
     """Parse string and return appropriate numeric logger level
 
-    Args:
-        level (str)     -- the string representation of a logging level.
-            Level is one of these: [NOTSET|DEBUG|INFO|WARNING|ERROR|CRITICAL]
+    Parameters
+    ----------
+    level : str
+        the string representation of a logging level.
+        Level is one of these: [NOTSET|DEBUG|INFO|WARNING|ERROR|CRITICAL]
 
-    Returns:
-        int value of the log level - see doctests below for mapping
-            if for some reason the level is not known return DEBUG (10)
+    Returns
+    -------
+    int
+        value of the log level - see doctests below for mapping
+        if for some reason the level is not known return DEBUG (10)
+
+    Examples
+    --------
 
     >>> print(_get_numeric_logger_level_from_string("NOTSET"))
     0
@@ -93,6 +133,8 @@ def _get_numeric_logger_level_from_string(level):
     40
     >>> print(_get_numeric_logger_level_from_string("CRITICAL"))
     50
+    >>> print(_get_numeric_logger_level_from_string("FOO_BAR"))
+    10
 
     """
 
@@ -120,35 +162,50 @@ def set_up_logger(logger_name="generic_logger",
                   file_log_dir="log"):
     """Set up an instance of logging for both file and console logs.
 
-        Log level ERROR contains ERROR and CRITICAL.
-        WARNING contains ERROR (and CRITICAL) and so on.
-        DEBUG log all levels.
-        The level sequence is: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL
-        Be aware that there are two layers for the logging level:
-        1) the "core" logger level
-        2) the "Handler" (either File or Stream) level.
-        The core logger passes the messages on to the Handlers so the core
-        level must at least match the most verbose Handler level.
+    Log level ERROR contains ERROR and CRITICAL.
+    WARNING contains ERROR (and CRITICAL) and so on.
+    **DEBUG log all levels.**
+    The level sequence is: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL
+    Be aware that there are two layers for the logging level:
 
-    Args:
-        logger_name (str)       -- name of logger for logfile name
-            (default "generic_logger")
+    1. the "core" logger level
+    2. the "Handler" (either File or Stream) level.
 
-        console_log (bool)      -- [True|False] to enable or disable
-            console logging (default True)
+    The core logger passes the messages on to the Handlers so the core level
+    must at least match the most verbose Handler level.
 
-        console_log_level (str) -- console log level (default "INFO")
+    Parameters
+    ----------
+    logger_name : str
+        name of logger for logfile name
+    console_log : bool
+        to enable or disable
+    console_log_level : str
+        console log level (default "INFO")
+    file_log : bool
+        to enable or disable file
+    file_log_level : str
+        file log level (default "DEBUG")
+    file_log_dir : str
+        dir to write log file to. No trailing slash.
 
-        file_log (bool)         -- [True|False] to enable or disable file
-            logging (default True)
+    Returns
+    -------
+    Logger
+        Object of Logger Class
 
-        file_log_level (str)    -- file log level (default "DEBUG")
+    Notes
+    -----
+    That would be it.. File/Stream Handler might be interesting.
 
-        file_log_dir (str)      -- dir to write log file to. No trailing slash.
-             (default "log")
-
-    Returns:
-        logger object
+    Examples
+    --------
+    >>> print(set_up_logger()).level
+    10
+    >>> print(set_up_logger()).isEnabledFor(10)
+    True
+    >>> print(set_up_logger()).isEnabledFor(9)
+    False
 
     """
 
@@ -216,7 +273,159 @@ def set_up_logger(logger_name="generic_logger",
     return logger
 
 
+def rsync_local_to_remote(local_source=None,
+                          id_file="~/.ssh/id_rsa",
+                          remote_user="user",
+                          remote_host="localhost",
+                          remote_destination=None,
+                          delete=False,
+                          dry=False):
+    """Rsync a given local file or directory to a remote ssh destination
+
+    Parameters
+    ----------
+    local_source : str
+        the local file/directory name
+    id_file : str
+        ssh private key file (id_rsa)
+    remote_user : str
+         username on remote host
+    remote_host : str
+        IP/FQDN of remote host
+    remote_destination : str
+        direcotry to put files on remote host
+    delete : bool
+        delete extraneous files from dest dirs
+        see rsync man page (default: False)
+    dry : bool
+        prints command string (rsync not executed)
+
+    Returns
+    -------
+    str
+        stdout
+    str
+        stderr
+    int
+        exitcodes
+
+    **if dry was set to True then**
+
+    str
+        shell command string
+
+    Example
+    -------
+    >>> print(rsync_local_to_remote(local_source="/some/foo", id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host",remote_destination="/some/bar/", delete=True, dry=True))
+    rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' /some/foo user@host:/some/bar/
+
+    >>> print(rsync_local_to_remote(local_source="/some/foo", id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host", remote_destination="/some/bar/", dry=True))
+    rsync -arq --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' /some/foo user@host:/some/bar/
+
+    """
+
+    parameters = {'local_source': local_source,
+                  'id_file': id_file,
+                  'remote_user': remote_user,
+                  'remote_host': remote_host,
+                  'remote_destination': remote_destination}
+
+    if delete is False:
+        command_string = '''rsync -arq --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "%(id_file)s"' %(local_source)s %(remote_user)s@%(remote_host)s:%(remote_destination)s''' % parameters
+    else:
+        command_string = '''rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "%(id_file)s"' %(local_source)s %(remote_user)s@%(remote_host)s:%(remote_destination)s''' % parameters
+
+    if dry is True:
+        return command_string
+    else:
+        stdout, stderr, exitcodes = call_process(command_string)
+
+        if exitcodes == 0:
+            print("rsync successful")
+            # logger.info("rsync successful")
+            return stdout, stderr, exitcodes
+        else:
+            print("rsync failed")
+            # logger.error("rsync failed")
+            return stdout, stderr, exitcodes
+
+
+def rsync_remote_to_local(local_destination=None,
+                          id_file="~/.ssh/id_rsa",
+                          remote_user="user",
+                          remote_host="localhost",
+                          remote_source=None,
+                          delete=False,
+                          dry=False):
+    """Rsync a given remote file or directory to a local destination
+
+    Parameters
+    ----------
+    local_destination : str
+        the local file/directory name
+    id_file : str
+        ssh private key file (id_rsa)
+    remote_user : str
+        username on remote host
+    remote_host : str
+        IP/FQDN of remote host
+    remote_source : str
+        direcotry to put files on remote host
+    delete : bool
+        delete extraneous files from dest dirs
+        see rsync man page (default: False)
+    dry : bool
+        prints command string (rsync not executed)
+
+    Returns
+    -------
+    bool
+        True or False
+    err_msg : str
+        Error Message
+
+    Example
+    -------
+    >>> print(rsync_remote_to_local(local_destination="./", id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host", remote_source="/some/place/", delete=True, dry=True))
+    rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' user@host:/some/place/ ./
+
+    >>> print(rsync_remote_to_local(local_destination="./", id_file="~/.ssh/id_rsa", remote_user="user", remote_host="host", remote_source="/some/place/", dry=True))
+    rsync -arq --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa"' user@host:/some/place/ ./
+
+    """
+    # todo make sure local_destination is ok..?!
+
+    parameters = {'local_destination': local_destination,
+                  'id_file': id_file,
+                  'remote_user': remote_user,
+                  'remote_host': remote_host,
+                  'remote_source': remote_source}
+
+    if delete is False:
+        command_string = '''rsync -arq --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "%(id_file)s"' %(remote_user)s@%(remote_host)s:%(remote_source)s %(local_destination)s''' % parameters
+    else:
+        command_string = '''rsync -arq --delete --inplace -e 'ssh -o BatchMode=yes -o UserKnownHostsFile="/dev/null" -o StrictHostKeyChecking=no -i "%(id_file)s"' %(remote_user)s@%(remote_host)s:%(remote_source)s %(local_destination)s''' % parameters
+
+    if dry is True:
+        return command_string
+    else:
+        stdout, stderr, exitcodes = call_process(command_string)
+
+        if exitcodes == 0:
+            # logger.info("rsync successful")
+            print("rsync successful")
+            return stdout, stderr, exitcodes
+        else:
+            # logger.error("rsync failed")
+            print("rsync failed")
+            return stdout, stderr, exitcodes
+
+
 def main():
+    """Main - this docstring counts as vaild test :-)
+    >>> main()
+
+    """
     pass
 
 if __name__ == "__main__":

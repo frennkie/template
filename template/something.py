@@ -8,7 +8,7 @@
 # Date:         1970-01-01
 
 # Versioning
-__version_info__ = ('0', '4', '0')
+__version_info__ = ('0', '6', '0')
 __version__ = '.'.join(__version_info__)
 
 # Imports
@@ -22,6 +22,20 @@ script_name = "something"
 
 
 def fake():
+    """Fake function so that we can run a fake test.
+
+    Returns
+    -------
+    bool
+        True always
+
+    Examples
+    -------
+    >>> fake()
+    True
+
+    """
+
     return True
 
 
@@ -49,7 +63,7 @@ def main():
     # parse args
     args = parser.parse_args()
 
-    # -q (quite) has precedence over -v (verbose)
+    # -q (quiet) has precedence over -v (verbose)
     if args.quiet:
         args_verbosity = "ERROR"
     else:
