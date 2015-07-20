@@ -11,11 +11,58 @@
 __version_info__ = ('0', '6', '0')
 __version__ = '.'.join(__version_info__)
 
+
+"""
+Please remove this comment block after reading and understanding it:
+
+This file contains templates for the following features:
+1) Passing commandline parameters (arg) to the script
+    - argmuents can be made either optional or mandatory
+    - the option -h can not be used as this is implizit and prints a short help
+    - argument type (string/int) and defaults can be defined
+
+2) Logging
+    a)  to console (two different facilities):
+        - current user options:
+            -V      print version (also --version)
+            -v      very verbose (DEBUG)
+            -q      very silent (ERROR)
+        no flag regular (INFO)
+
+    b) to file
+        --loglevel
+        --nolog     disable file logging
+
+3) Exit codes for clear communication to calling scripts/users
+    - e.g. sys.exit(os.EX_OK) for a clean exit
+    - look for "os.EX_" for more codes: https://docs.python.org/2/library/os.html
+
+4) Loading configuration settings from a file ("config.py")
+    - check whether you need this
+    - if yes, decide what happens if the file does not exist (pass or exit)
+
+- remove until here!
+"""
+
+
 # Imports
 import argparse
 
-import config.config as config
 import modules.misc as misc
+
+try:
+    import config.config as config
+except ImportError:
+    # You! Need to decide what to do here.. exit or ignore and contiune!
+    raise ImportError("FYI: could not import config.py. Make sure to create it from config.py.sample")
+
+    # exit
+    sys.exit(1)
+
+    # pass
+    continue
+
+
 
 # Same name as line 4 but without the extension (e.g. "backup_script")
 script_name = "something"
