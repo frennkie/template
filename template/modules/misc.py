@@ -37,9 +37,9 @@ def call_process(command):
 
     """
 
-    p = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, stderr = p.communicate()
-    exitcodes = p.returncode
+    process = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    exitcodes = process.returncode
 
     return stdout, stderr, exitcodes
 
@@ -209,6 +209,7 @@ def set_up_logger(logger_name="generic_logger",
 
     """
 
+
     # instantiate logger object
     logger = logging.getLogger(logger_name)
 
@@ -341,11 +342,11 @@ def rsync_local_to_remote(local_source=None,
         stdout, stderr, exitcodes = call_process(command_string)
 
         if exitcodes == 0:
-            print("rsync successful")
+            print "rsync successful"
             # logger.info("rsync successful")
             return stdout, stderr, exitcodes
         else:
-            print("rsync failed")
+            print "rsync failed"
             # logger.error("rsync failed")
             return stdout, stderr, exitcodes
 
@@ -413,11 +414,11 @@ def rsync_remote_to_local(local_destination=None,
 
         if exitcodes == 0:
             # logger.info("rsync successful")
-            print("rsync successful")
+            print "rsync successful"
             return stdout, stderr, exitcodes
         else:
             # logger.error("rsync failed")
-            print("rsync failed")
+            print "rsync failed"
             return stdout, stderr, exitcodes
 
 
