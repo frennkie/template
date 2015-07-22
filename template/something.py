@@ -58,12 +58,13 @@ except ImportError as error:
     print "Could not import config.py. " + error
     raise ImportError("Err Could not import config.py. Check config.py.sample")
 
+    """
     # exit
     sys.exit(1)
 
     # pass
     continue
-
+    """
 
 
 # Same name as line 4 but without the extension (e.g. "backup_script")
@@ -109,7 +110,7 @@ def main():
                         help="log dir (default: log)")
     parser.add_argument("--loglevel", type=str, default="DEBUG",
                         help="logfile verbosity (default: DEBUG)",
-                        choices=['DEBUG',
+                        choices=['TRACE', 'DEBUG',
                                  'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
     # parse args
     args = parser.parse_args()
@@ -137,15 +138,18 @@ def main():
                                     file_log_level=args.loglevel,
                                     file_log_dir=args.logdir)
 
+    print "loglevel: " + args.loglevel
+    logger.trace("trace message")
     logger.debug("debug message")
     logger.info("info message")
     logger.warning("warn message")
     logger.error("error message")
     logger.critical("critical message")
 
+    """
     print config.PASSWORD
     print misc.say_hello_world()
-
+    """
     # Start Coding Here!
 
 

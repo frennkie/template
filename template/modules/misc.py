@@ -123,6 +123,8 @@ def _get_numeric_logger_level_from_string(level):
 
     >>> print(_get_numeric_logger_level_from_string("NOTSET"))
     0
+    >>> print(_get_numeric_logger_level_from_string("TRACE"))
+    5
     >>> print(_get_numeric_logger_level_from_string("DEBUG"))
     10
     >>> print(_get_numeric_logger_level_from_string("INFO"))
@@ -140,6 +142,8 @@ def _get_numeric_logger_level_from_string(level):
 
     if level == "NOTSET":
         return 0
+    elif level == "TRACE":
+        return 5
     elif level == "DEBUG":
         return 10
     elif level == "INFO":
@@ -213,8 +217,17 @@ def set_up_logger(logger_name="generic_logger",
     # instantiate logger object
     logger = logging.getLogger(logger_name)
 
+    # add custom logger level "TRACE" (5)
+    TRACE_LEVEL_NUM = 5
+    logging.addLevelName(TRACE_LEVEL_NUM, "TRACE")
+    def trace(self, message, *args, **kws):
+        # Yes, logger takes its '*args' as 'args'.
+        if self.isEnabledFor(TRACE_LEVEL_NUM):
+            self._log(TRACE_LEVEL_NUM, message, args, **kws)
+    logging.Logger.trace = trace
+
     # just set core level to DEBUG (no need to evaluate file/console levels)
-    logger.setLevel(_get_numeric_logger_level_from_string("DEBUG"))
+    logger.setLevel(_get_numeric_logger_level_from_string("TRACE"))
 
     # create formatter
     log_message_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
