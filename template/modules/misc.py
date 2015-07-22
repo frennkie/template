@@ -226,7 +226,7 @@ def set_up_logger(logger_name="generic_logger",
             self._log(TRACE_LEVEL_NUM, message, args, **kws)
     logging.Logger.trace = trace
 
-    # just set core level to DEBUG (no need to evaluate file/console levels)
+    # just set core level to TRACE (no need to evaluate file/console levels)
     logger.setLevel(_get_numeric_logger_level_from_string("TRACE"))
 
     # create formatter
