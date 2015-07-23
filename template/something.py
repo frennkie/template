@@ -1,19 +1,18 @@
 #!venv/bin/python
 # -*- coding: utf-8 -*-
-#
+"""
 # Name:         something.py
 # Description:  Something
 #
 # Author:       mail@rhab.de
 # Date:         1970-01-01
-
+"""
 # Versioning
-__version_info__ = ('0', '6', '1')
+__version_info__ = ('0', '6', '2')
 __version__ = '.'.join(__version_info__)
 
 
-"""
-Please remove this comment block after reading and understanding it:
+""" Please remove this comment block after reading and understanding it:
 
 This file contains templates for the following features:
 1) Passing commandline parameters (arg) to the script
@@ -35,37 +34,41 @@ This file contains templates for the following features:
 
 3) Exit codes for clear communication to calling scripts/users
     - e.g. sys.exit(os.EX_OK) for a clean exit
-    - look for "os.EX_" for more codes: https://docs.python.org/2/library/os.html
+    - look for "os.EX_" for more: https://docs.python.org/2/library/os.html
 
 4) Loading configuration settings from a file ("config.py")
     - check whether you need this
     - if yes, decide what happens if the file does not exist (pass or exit)
 
 - remove until here!
+
 """
 
 
 # Imports
 import argparse
+import sys
 
 import modules.misc as misc
 
 try:
     import config.config as config
-except ImportError:
+except ImportError as error:
     # You! Need to decide what to do here.. exit or ignore and contiune!
-    raise ImportError("FYI: could not import config.py. Make sure to create it from config.py.sample")
+    print "Could not import config.py. " + error
+    raise ImportError("Err Could not import config.py. Check config.py.sample")
 
+    """
     # exit
     sys.exit(1)
 
     # pass
     continue
-
+    """
 
 
 # Same name as line 4 but without the extension (e.g. "backup_script")
-script_name = "something"
+SCRIPT_NAME = "something"
 
 
 def fake():
@@ -87,6 +90,8 @@ def fake():
 
 
 def main():
+    """ Main """
+
     # set up command line argument parsing
     parser = argparse.ArgumentParser(description="Something")
     parser.add_argument("-V", "--version",
@@ -105,7 +110,7 @@ def main():
                         help="log dir (default: log)")
     parser.add_argument("--loglevel", type=str, default="DEBUG",
                         help="logfile verbosity (default: DEBUG)",
-                        choices=['DEBUG',
+                        choices=['TRACE', 'DEBUG',
                                  'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
     # parse args
     args = parser.parse_args()
@@ -121,27 +126,30 @@ def main():
             args_verbosity = "INFO"
 
     if args.nolog:
-        logger = misc.set_up_logger(logger_name=script_name,
+        logger = misc.set_up_logger(logger_name=SCRIPT_NAME,
                                     console_log=True,
                                     console_log_level=args_verbosity,
                                     file_log=False)
     else:
-        logger = misc.set_up_logger(logger_name=script_name,
+        logger = misc.set_up_logger(logger_name=SCRIPT_NAME,
                                     console_log=True,
                                     console_log_level=args_verbosity,
                                     file_log=True,
                                     file_log_level=args.loglevel,
                                     file_log_dir=args.logdir)
 
+    print "loglevel: " + args.loglevel
+    logger.trace("trace message")
     logger.debug("debug message")
     logger.info("info message")
     logger.warning("warn message")
     logger.error("error message")
     logger.critical("critical message")
 
+    """
     print config.PASSWORD
     print misc.say_hello_world()
-
+    """
     # Start Coding Here!
 
 

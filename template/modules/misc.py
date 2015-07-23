@@ -7,7 +7,7 @@
 # Date:         1970-01-01
 
 # Versioning
-__version_info__ = ('0', '6', '1')
+__version_info__ = ('0', '6', '2')
 __version__ = '.'.join(__version_info__)
 
 # Imports
@@ -37,9 +37,9 @@ def call_process(command):
 
     """
 
-    p = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, stderr = p.communicate()
-    exitcodes = p.returncode
+    process = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    exitcodes = process.returncode
 
     return stdout, stderr, exitcodes
 
@@ -123,6 +123,8 @@ def _get_numeric_logger_level_from_string(level):
 
     >>> print(_get_numeric_logger_level_from_string("NOTSET"))
     0
+    >>> print(_get_numeric_logger_level_from_string("TRACE"))
+    5
     >>> print(_get_numeric_logger_level_from_string("DEBUG"))
     10
     >>> print(_get_numeric_logger_level_from_string("INFO"))
@@ -140,6 +142,8 @@ def _get_numeric_logger_level_from_string(level):
 
     if level == "NOTSET":
         return 0
+    elif level == "TRACE":
+        return 5
     elif level == "DEBUG":
         return 10
     elif level == "INFO":
@@ -209,11 +213,21 @@ def set_up_logger(logger_name="generic_logger",
 
     """
 
+
     # instantiate logger object
     logger = logging.getLogger(logger_name)
 
-    # just set core level to DEBUG (no need to evaluate file/console levels)
-    logger.setLevel(_get_numeric_logger_level_from_string("DEBUG"))
+    # add custom logger level "TRACE" (5)
+    TRACE_LEVEL_NUM = 5
+    logging.addLevelName(TRACE_LEVEL_NUM, "TRACE")
+    def trace(self, message, *args, **kws):
+        # Yes, logger takes its '*args' as 'args'.
+        if self.isEnabledFor(TRACE_LEVEL_NUM):
+            self._log(TRACE_LEVEL_NUM, message, args, **kws)
+    logging.Logger.trace = trace
+
+    # just set core level to TRACE (no need to evaluate file/console levels)
+    logger.setLevel(_get_numeric_logger_level_from_string("TRACE"))
 
     # create formatter
     log_message_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -341,11 +355,11 @@ def rsync_local_to_remote(local_source=None,
         stdout, stderr, exitcodes = call_process(command_string)
 
         if exitcodes == 0:
-            print("rsync successful")
+            print "rsync successful"
             # logger.info("rsync successful")
             return stdout, stderr, exitcodes
         else:
-            print("rsync failed")
+            print "rsync failed"
             # logger.error("rsync failed")
             return stdout, stderr, exitcodes
 
@@ -413,11 +427,11 @@ def rsync_remote_to_local(local_destination=None,
 
         if exitcodes == 0:
             # logger.info("rsync successful")
-            print("rsync successful")
+            print "rsync successful"
             return stdout, stderr, exitcodes
         else:
             # logger.error("rsync failed")
-            print("rsync failed")
+            print "rsync failed"
             return stdout, stderr, exitcodes
 
 
