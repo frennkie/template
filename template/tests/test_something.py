@@ -7,7 +7,7 @@
 # Date:         1970-01-01
 
 # Versioning
-__version_info__ = ('0', '6', '1')
+__version_info__ = ('0', '6', '2')
 __version__ = '.'.join(__version_info__)
 
 # make sure (early) to add parent dir (main app) to path
