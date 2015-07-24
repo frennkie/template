@@ -12,6 +12,7 @@ __version__ = '.'.join(__version_info__)
 
 # Imports
 import logging
+import logging.handlers
 import os.path
 import sys
 import subprocess
@@ -230,7 +231,7 @@ def set_up_logger(logger_name="generic_logger",
     logger.setLevel(_get_numeric_logger_level_from_string("TRACE"))
 
     # create formatter
-    log_message_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    log_message_format = "%(asctime)s - %(name)s - %(filename)s:%(lineno)d - %(levelname)s - %(message)s"
     formatter = logging.Formatter(log_message_format)
 
     # is file logging enabled?
@@ -262,7 +263,8 @@ def set_up_logger(logger_name="generic_logger",
             sys.exit(1)
 
         # add FileHandler, set Level, add Formatter, apply Handler to logger
-        fh = logging.FileHandler(log_file)
+        fh = logging.handlers.RotatingFileHandler(log_file, encoding='utf8',
+                        maxBytes=10000000000, backupCount=5)
         fh.setLevel(_get_numeric_logger_level_from_string(file_log_level))
         fh.setFormatter(formatter)
         logger.addHandler(fh)
