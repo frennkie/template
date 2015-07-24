@@ -55,7 +55,7 @@ try:
     import config.config as config
 except ImportError as error:
     # You! Need to decide what to do here.. exit or ignore and contiune!
-    print "Could not import config.py. " + error
+    print "Could not import config.py. " + str(error)
     raise ImportError("Err Could not import config.py. Check config.py.sample")
 
     """
