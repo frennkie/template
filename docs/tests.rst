@@ -1,5 +1,5 @@
 template tests Package
-==================
+======================
 
 :mod:`tests.test_misc` Package
 ------------------------------
