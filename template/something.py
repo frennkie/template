@@ -1,14 +1,17 @@
 #!venv/bin/python
 # -*- coding: utf-8 -*-
-"""
-# Name:         something.py
-# Description:  Something
-#
-# Author:       mail@rhab.de
-# Date:         1970-01-01
+"""This module does somthing
+
+Explain what it does briefly. This can span over multiple lines. Not sure
+whether and how to include meta data (Name, Author, Date)
+
+- Name:         something.py
+- Description:  Something
+- Author:       mail@rhab.de
+- Date:         1970-01-01
 """
 # Versioning
-__version_info__ = ('0', '6', '2')
+__version_info__ = ('0', '6', '3')
 __version__ = '.'.join(__version_info__)
 
 
@@ -55,7 +58,7 @@ try:
     import config.config as config
 except ImportError as error:
     # You! Need to decide what to do here.. exit or ignore and contiune!
-    print "Could not import config.py. " + error
+    print "Could not import config.py. " + str(error)
     raise ImportError("Err Could not import config.py. Check config.py.sample")
 
     """
@@ -69,18 +72,16 @@ except ImportError as error:
 
 # Same name as line 4 but without the extension (e.g. "backup_script")
 SCRIPT_NAME = "something"
-
+LOGGER_NAME = "log"
 
 def fake():
     """Fake function so that we can run a fake test.
 
-    Returns
-    -------
-    bool
-        True always
+    Returns:
+        result (bool): Always True
 
-    Examples
-    -------
+    Examples:
+
     >>> fake()
     True
 
@@ -126,12 +127,12 @@ def main():
             args_verbosity = "INFO"
 
     if args.nolog:
-        logger = misc.set_up_logger(logger_name=SCRIPT_NAME,
+        logger = misc.set_up_logger(logger_name=LOGGER_NAME,
                                     console_log=True,
                                     console_log_level=args_verbosity,
                                     file_log=False)
     else:
-        logger = misc.set_up_logger(logger_name=SCRIPT_NAME,
+        logger = misc.set_up_logger(logger_name=LOGGER_NAME,
                                     console_log=True,
                                     console_log_level=args_verbosity,
                                     file_log=True,
@@ -146,12 +147,15 @@ def main():
     logger.error("error message")
     logger.critical("critical message")
 
+    logger.info(__name__)
+
     """
     print config.PASSWORD
     print misc.say_hello_world()
     """
     # Start Coding Here!
 
+    misc.say_hello_world()
 
 if __name__ == "__main__":
     main()
