@@ -11,7 +11,7 @@ whether and how to include meta data (Name, Author, Date)
 - Date:         1970-01-01
 """
 # Versioning
-__version_info__ = ('0', '6', '2')
+__version_info__ = ('0', '6', '3')
 __version__ = '.'.join(__version_info__)
 
 
