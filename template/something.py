@@ -69,7 +69,7 @@ except ImportError as error:
 
 # Same name as line 4 but without the extension (e.g. "backup_script")
 SCRIPT_NAME = "something"
-
+LOGGER_NAME = "log"
 
 def fake():
     """Fake function so that we can run a fake test.
@@ -126,12 +126,12 @@ def main():
             args_verbosity = "INFO"
 
     if args.nolog:
-        logger = misc.set_up_logger(logger_name=SCRIPT_NAME,
+        logger = misc.set_up_logger(logger_name=LOGGER_NAME,
                                     console_log=True,
                                     console_log_level=args_verbosity,
                                     file_log=False)
     else:
-        logger = misc.set_up_logger(logger_name=SCRIPT_NAME,
+        logger = misc.set_up_logger(logger_name=LOGGER_NAME,
                                     console_log=True,
                                     console_log_level=args_verbosity,
                                     file_log=True,

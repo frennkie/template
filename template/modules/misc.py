@@ -17,6 +17,9 @@ import os.path
 import sys
 import subprocess
 
+LOGGER_NAME = "log"
+logger = logging.getLogger(LOGGER_NAME)
+
 # Functions
 
 
