@@ -1,11 +1,14 @@
 #!venv/bin/python
 # -*- coding: utf-8 -*-
-"""
-# Name:         something.py
-# Description:  Something
-#
-# Author:       mail@rhab.de
-# Date:         1970-01-01
+"""This module does somthing
+
+Explain what it does briefly. This can span over multiple lines. Not sure
+whether and how to include meta data (Name, Author, Date)
+
+- Name:         something.py
+- Description:  Something
+- Author:       mail@rhab.de
+- Date:         1970-01-01
 """
 # Versioning
 __version_info__ = ('0', '6', '2')
@@ -74,13 +77,11 @@ LOGGER_NAME = "log"
 def fake():
     """Fake function so that we can run a fake test.
 
-    Returns
-    -------
-    bool
-        True always
+    Returns:
+        result (bool): Always True
 
-    Examples
-    -------
+    Examples:
+
     >>> fake()
     True
 
@@ -146,12 +147,15 @@ def main():
     logger.error("error message")
     logger.critical("critical message")
 
+    logger.info(__name__)
+
     """
     print config.PASSWORD
     print misc.say_hello_world()
     """
     # Start Coding Here!
 
+    misc.say_hello_world()
 
 if __name__ == "__main__":
     main()
