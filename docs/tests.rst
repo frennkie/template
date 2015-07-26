@@ -1,7 +1,7 @@
-template tests Package
+template Tests
 ======================
 
-:mod:`tests.test_misc` Package
+:mod:`tests.test_misc`
 ------------------------------
 
 .. automodule:: tests.test_misc
@@ -9,7 +9,7 @@ template tests Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`tests.test_something` Package
+:mod:`tests.test_something`
 -----------------------------------
 
 .. automodule:: tests.test_something

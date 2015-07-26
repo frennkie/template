@@ -1,16 +1,16 @@
-template Package
-==================
+template
+========
 
-:mod:`something` Package
-------------------------
+:mod:`something`
+----------------
 
 .. automodule:: something
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`modules.misc` Package
----------------------------
+:mod:`modules.misc` Module
+--------------------------
 
 .. automodule:: modules.misc
     :members:
